@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 const NoteCart = ({ notes, handleDeleteClick, openEditModal }) => {
   const loading = useSelector((data) => data.notes.loading);
   const totalNote = useSelector((data) => data.notes.notes);
-  //   console.log("Loading is", loading);
 
   return (
     <div>
@@ -28,9 +27,7 @@ const NoteCart = ({ notes, handleDeleteClick, openEditModal }) => {
               <h3 className="text-2xl font-bold text-gray-800 mb-2 capitalize">
                 {item.title}
               </h3>
-              <p className="capitalize text-gray-600 text-base">
-                {item.content}
-              </p>
+              <p className="text-sm text-gray-500 ">{item.content}</p>
             </div>
             <div className="w-[20%] flex justify-end gap-4 items-center">
               <span

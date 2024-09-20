@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { createNote, updateNote } from "../../redux/dataSlice";
+import Swal from "sweetalert2";
 const AddModel = ({ modelOpenAndClose, noteToEdit }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -21,8 +22,26 @@ const AddModel = ({ modelOpenAndClose, noteToEdit }) => {
 
     if (noteToEdit) {
       dispatch(updateNote({ id: noteToEdit.id, title, content }));
+      Swal.fire({
+        title: "Updated!",
+        text: "Your note has been updated.",
+        icon: "success",
+        timer: 500,
+        showConfirmButton: false,
+      }).then(() => {
+        modelOpenAndClose();
+      });
     } else {
       dispatch(createNote({ title, content }));
+      Swal.fire({
+        title: "Added!",
+        text: "Your note has been added.",
+        icon: "success",
+        timer: 500,
+        showConfirmButton: false,
+      }).then(() => {
+        modelOpenAndClose();
+      });
     }
 
     modelOpenAndClose();
@@ -48,7 +67,7 @@ const AddModel = ({ modelOpenAndClose, noteToEdit }) => {
               type="text"
               id="title"
               placeholder="Enter the note title..."
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none "
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -63,7 +82,7 @@ const AddModel = ({ modelOpenAndClose, noteToEdit }) => {
               onChange={(e) => setContent(e.target.value)}
               id="content"
               placeholder="Enter the content..."
-              className="px-4 py-2 border border-gray-300 rounded-lg h-32 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 border border-gray-300 rounded-lg h-32 resize-none focus:outline-none "
             ></textarea>
           </div>
           <div className="flex justify-end gap-4">

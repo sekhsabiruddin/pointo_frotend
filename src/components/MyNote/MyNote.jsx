@@ -7,8 +7,10 @@ import { getAllNotes, deleteNote } from "../../redux/dataSlice";
 import AddModel from "../AddModel/AddModel";
 import EmptyNote from "../EmptyNote/EmptyNote";
 import NoteCart from "../NoteCart/NoteCart";
+import SkeletonLoader from "../Skeleton/SkeletonLoader";
 
 const MyNote = () => {
+  const loading = useSelector((data) => data.notes.loading);
   const [isOpen, setOpen] = useState(false);
   const [noteToEdit, setNoteToEdit] = useState(null);
   const notes = useSelector((data) => data.notes.notes);
@@ -21,7 +23,7 @@ const MyNote = () => {
     dispatch(getAllNotes());
   }, [dispatch]);
 
-  //==================== Handle Delete Click Function ====================
+  // Handle Delete Click Function
   const handleDeleteClick = async (id) => {
     const result = await Swal.fire({
       title: "Do you want to delete this note?",
@@ -36,11 +38,16 @@ const MyNote = () => {
     if (result.isConfirmed) {
       await dispatch(deleteNote(id));
       await dispatch(getAllNotes());
-      Swal.fire("Deleted!", "Your note has been deleted.", "success");
+      Swal.fire({
+        title: "Deleted!",
+        text: "Your note has been deleted.",
+        icon: "success",
+        timer: 1000,
+        showConfirmButton: false,
+      });
     }
   };
 
-  //==================== Handle Edit Function Start====================
   const openEditModal = (note) => {
     setNoteToEdit(note);
     setOpen(true);
@@ -49,12 +56,16 @@ const MyNote = () => {
   const modelOpenAndClose = () => {
     setOpen(!isOpen);
   };
-  //==================== Handle Edit Function End====================
+
   return (
     <>
       <div className="flex justify-center mt-10 p-4 lg:p-5">
         <div className="bg-white border border-gray-300 rounded-lg w-[95%] sm:w-[90%] md:w-[85%] lg:w-[70%] lg:p-6">
-          {searchNote.length > 0 ? (
+          {loading ? (
+            Array(5)
+              .fill(0)
+              .map((_, index) => <SkeletonLoader key={index} />)
+          ) : searchNote.length > 0 ? (
             <NoteCart
               notes={searchNote}
               handleDeleteClick={handleDeleteClick}

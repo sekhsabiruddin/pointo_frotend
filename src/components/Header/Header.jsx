@@ -13,23 +13,19 @@ const Header = () => {
   }
 
   function handleSearch(e) {
-    console.log("Search value....", e.target.value);
+    // console.log("Search value....", e.target.value);
     dispatch(searchTheNote(e.target.value));
   }
 
   return (
     <div className="px-3 py-4 boxshadow">
-      {/* Title Section */}
       <div className="flex justify-center items-center mb-4 sm:mb-0">
         <span className="text-xl sm:text-2xl font-bold tracking-wide">
           My Note
         </span>
       </div>
 
-      {/* Main Container */}
       <div className="flex flex-col sm:flex-row justify-between items-center">
-        {/* Add Note Button */}
-
         <div
           className="cursor-pointer rounded-border"
           onClick={modelOpenAndClose}
@@ -37,8 +33,7 @@ const Header = () => {
           <span className="font-semibold">Add note</span>
         </div>
 
-        {/* Search Input */}
-        <div className="relative w-full sm:w-auto">
+        <div className="relative w-full sm:w-auto mt-3 lg:mt-0">
           <input
             onChange={handleSearch}
             type="text"
@@ -64,7 +59,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Add Note Modal */}
       {isOpen && <AddModel modelOpenAndClose={modelOpenAndClose} />}
     </div>
   );
